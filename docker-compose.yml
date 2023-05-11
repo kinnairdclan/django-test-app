@@ -1,0 +1,16 @@
+services:
+  web:
+    restart: always
+    build: 
+      context: ./web
+      args:
+        USER_ID: "${USER_ID:-1000}"
+        GROUP_ID: "${GROUP_ID:-1000}"
+    expose:
+      - "8000"
+    #volumes:
+    #  - web-django:/usr/src/app
+    #  - web-static:/usr/src/app/static
+    #env_file: .env
+    command: PYTHONPATH=/home/user/.local django_test_app.wsgi:application -w 2 -b :8000
+

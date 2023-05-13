@@ -1,0 +1,13 @@
+#Install all Python dependcies as non-root. This will allow later interaction with Django via docker exec commands.
+FROM python:3-slim
+ENV PYTHONUNBUFFERED=1
+ENV PYTHON_LOCALPATH=/home/user/.local/bin/
+
+RUN adduser --system user
+USER user
+ENV PATH=${PYTHON_LOCALPATH}:$PATH
+
+WORKDIR /code
+COPY requirements.txt manage.py ./
+COPY django_test_app django_test_app
+RUN pip install -r requirements.txt

@@ -3,8 +3,9 @@ services:
     restart: always
     build: 
       context: ./web
-      args:
-        USER_ID: "${USER_ID:-1000}"
-        GROUP_ID: "${GROUP_ID:-1000}"
-    expose:
-      - "8000"
+      dockerfile: Dockerfile.dev
+    ports:
+      - 8000:8000
+    volumes: 
+      - ./web:/code
+    command: "gunicorn django_test_app.wsgi:application -w 2 -b :8000"
